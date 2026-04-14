@@ -1,0 +1,8 @@
+<resources>
+    <string name="home_title">Главный экран</string>
+    <string name="home_search_placeholder">Поиск</string>
+    <string name="home_sort_by_date">По дате добавление</string>
+    <string name="home_details">Подробнее -&gt;</string>
+    <string name="home_filter_desc">Фильтр</string>
+    <string name="home_sort_desc">Сортировка</string>
+</resources>
