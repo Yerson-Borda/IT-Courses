@@ -1,5 +1,6 @@
 package com.app.feature.login.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,14 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +30,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.feature.login.R
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun LoginRoute(
@@ -72,7 +77,7 @@ private fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(
@@ -80,16 +85,36 @@ private fun LoginScreen(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(28.dp))
+
+        Text(
+            text = "Email",
+            fontWeight = FontWeight.Medium,
+            color = Color.White
+        )
         OutlinedTextField(
             value = state.email,
             onValueChange = onEmailChanged,
             singleLine = true,
             label = { Text(stringResource(R.string.login_email)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            shape = RoundedCornerShape(30.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFF32333A),
+                focusedContainerColor = Color(0xFF32333A),
+                focusedBorderColor = Color(0xFF32333A),
+                unfocusedBorderColor = Color(0xFF32333A),
+
+            ),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Пароль",
+            fontWeight = FontWeight.Medium,
+            color = Color.White
+        )
         OutlinedTextField(
             value = state.password,
             onValueChange = onPasswordChanged,
@@ -97,13 +122,25 @@ private fun LoginScreen(
             label = { Text(stringResource(R.string.login_password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            shape = RoundedCornerShape(30.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFF32333A),
+                focusedContainerColor = Color(0xFF32333A),
+                focusedBorderColor = Color(0xFF32333A),
+                unfocusedBorderColor = Color(0xFF32333A)
+            ),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = onLoginClick,
             enabled = state.isLoginEnabled && !state.isLoading,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary,
+                disabledContentColor = Color.White
+            )
         ) {
             Text(
                 text = if (state.isLoading) {
@@ -113,36 +150,61 @@ private fun LoginScreen(
                 }
             )
         }
-        Spacer(modifier = Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TextButton(onClick = {}, enabled = false) {
-                Text(stringResource(R.string.login_registration))
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    stringResource(R.string.login_no_account),
+                    color = Color.White
+                )
+
+                Text(
+                    text = " ${stringResource(R.string.login_registration)}",
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
-            VerticalDivider(
-                modifier = Modifier
-                    .height(36.dp)
-                    .padding(horizontal = 4.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                stringResource(R.string.login_forgot_password),
+                color = MaterialTheme.colorScheme.primary
             )
-            TextButton(onClick = {}, enabled = false) {
-                Text(stringResource(R.string.login_forgot_password))
-            }
         }
+        Spacer(modifier = Modifier.height(32.dp))
         HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            OutlinedButton(onClick = onOpenVk) {
-                Text(stringResource(R.string.login_vk))
+            Button(
+                modifier = Modifier.fillMaxWidth().weight(0.5f),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF2683ED)
+                ),
+                onClick = onOpenVk
+            ) {
+                Image(
+                    painterResource(R.drawable.vk),
+                    contentDescription = "Open VK"
+                )
             }
             Spacer(modifier = Modifier.width(12.dp))
-            OutlinedButton(onClick = onOpenOk) {
-                Text(stringResource(R.string.login_ok))
+            Button(
+                modifier = Modifier.fillMaxWidth().weight(0.5f),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF95D00)
+                ),
+                onClick = onOpenOk
+            ) {
+                Image(
+                    painterResource(R.drawable.ok),
+                    contentDescription = "Open OK"
+                )
             }
         }
     }

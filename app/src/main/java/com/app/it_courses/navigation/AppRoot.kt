@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,9 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -77,17 +79,17 @@ fun ITCoursesApp(appComponent: AppComponent) {
             BottomBarItem(
                 route = HOME_ROUTE,
                 labelRes = R.string.nav_home,
-                icon = Icons.Default.Home
+                icon = Icons.Outlined.Home
             ),
             BottomBarItem(
                 route = FAVORITES_ROUTE,
                 labelRes = R.string.nav_favorites,
-                icon = Icons.Default.Bookmark
+                icon = Icons.Outlined.BookmarkBorder
             ),
             BottomBarItem(
                 route = PROFILE_ROUTE,
                 labelRes = R.string.nav_profile,
-                icon = Icons.Default.Person
+                icon = Icons.Outlined.Person
             )
         )
     }
@@ -148,8 +150,11 @@ private fun AppBottomBar(
     }
 
     Column {
-        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
-        NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
+        HorizontalDivider(
+            color = Color(0xFF4D555E),
+            thickness = 1.5.dp
+        )
+        NavigationBar(containerColor = Color(0xFF24252A)) {
             items.forEach { item ->
                 NavigationBarItem(
                     selected = selectedRoute == item.route,
